@@ -118,15 +118,6 @@ let rl;
 log.debug('Creating default manifest:'.green);
 log.debug(manifest.getJSON(false));
 
-if(packagePath) {
-    log.info('Reading package data: '.cyan + packagePath);
-    const packageFile = Manifest.readPackageFile(packagePath);
-    log.debug(JSON.stringify(packageFile, null, 2));
-    manifest.merge(packageFile, false);
-} else {
-    log.debug('No package path specified'.green);
-}
-
 if(args.timestamp) {
     const ts = new Date();
     log.debug('Generating timestamp:'.green, ts);
@@ -171,6 +162,15 @@ if(args.manifest && Manifest.cleanObject(args.manifest)) {
     manifest.merge(args.manifest, true);
 } else {
     log.debug('No manifest data in arguments'.green);
+}
+
+if(packagePath) {
+    log.info('Reading package data: '.cyan + packagePath);
+    const packageFile = Manifest.readPackageFile(packagePath);
+    log.debug(JSON.stringify(packageFile, null, 2));
+    manifest.merge(packageFile, false);
+} else {
+    log.debug('No package path specified'.green);
 }
 
 if(!args.interactive) {
